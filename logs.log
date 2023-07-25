@@ -1,0 +1,10 @@
+2023-07-25 13:24:53,710 FATAL WebDriverTest [main] fatal
+2023-07-25 13:26:43,518 ERROR WebDriverTest [main] error
+2023-07-25 13:27:30,018 DEBUG WebDriverTest [main] Тестовое сообщение
+2023-07-25 13:44:36,577 DEBUG WebDriverTest [main] Тестовое сообщение
+2023-07-25 13:52:37,821 DEBUG WebDriverTest [main] Тестовое сообщение
+2023-07-25 13:53:16,413 DEBUG WebDriverTest [main] Тестовое сообщение
+2023-07-25 14:02:09,733 DEBUG WebDriverTest [main] Тестовое сообщение
+2023-07-25 14:04:20,537 DEBUG WebDriverTest [main] Тестовое сообщение
+2023-07-25 14:04:31,114 FATAL WebDriverTest [main] fatal
+2023-07-25 14:04:35,367 ERROR WebDriverTest [main] error
