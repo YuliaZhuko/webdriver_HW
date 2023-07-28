@@ -6,7 +6,12 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static org.apache.hc.core5.util.Timeout.ofSeconds;
@@ -14,8 +19,11 @@ import static org.apache.hc.core5.util.Timeout.ofSeconds;
 public class WebDriverTest {
     WebDriver driver;
     private Logger log = (Logger) LogManager.getLogger(WebDriverTest.class);
-    private final String LOGIN = "towoc78451@sparkroi.com";
-    private final String PASSWORD = "Megere11+";
+    private final Properties prop = new Properties();
+    private FileInputStream fileInputStream;
+    private static final String PATH_TO_CONFIG_PROPERTIES = "src/test/resources/config.properties";
+
+    private String LOGIN, PASSWORD;
     @BeforeAll
     public static void webDriverSetup(){
         WebDriverManager.chromedriver().setup();
@@ -83,7 +91,7 @@ public class WebDriverTest {
             Assertions.assertEquals(expectedPictureRef, pictureRef, "Refs are different");
         }
         @Test
-    public void thirdTest(){
+    public void thirdTest() throws FileNotFoundException {
         log.debug("Тестовое сообщение");
 //      Set incognito and full screen modes
         setUpIncognito();
@@ -108,13 +116,12 @@ public class WebDriverTest {
         System.out.println(driver.manage().getCookies());
     }
 
-    private void auth(){
+    private void auth() throws FileNotFoundException {
         driver.findElement(By.cssSelector(".sc-mrx253-0")).click();
-        driver.findElement(By.cssSelector("#__PORTAL__ > div > div > div.sc-1alnis6-1.ejcuap > div.sc-1alnis6-4.iVBbVz > div > div.sc-10p60tv-1.eDzhKh > div.sc-10p60tv-2.bQGCmu > div > div.sc-19qj39o-0.iLmCeO > div > div.sc-rq8xzv-1.hGvqzc.sc-11ptd2v-1.liHMCp > div > input"))
-                .sendKeys(LOGIN);
-        driver.findElement(By.cssSelector("#__PORTAL__ > div > div > div.sc-1alnis6-1.ejcuap > div.sc-1alnis6-4.iVBbVz > div > div.sc-10p60tv-1.eDzhKh > div.sc-10p60tv-2.bQGCmu > div > div.sc-19qj39o-0.iLmCeO > div > div.sc-rq8xzv-1.hGvqzc.sc-11ptd2v-1-Component.ciraFX > div > input"))
-                .sendKeys(PASSWORD);
-        driver.findElement(By.cssSelector("#__PORTAL__ > div > div > div.sc-1alnis6-1.ejcuap > div.sc-1alnis6-4.iVBbVz > div > div.sc-10p60tv-1.eDzhKh > div.sc-10p60tv-2.bQGCmu > div > button > div"))
+        readProperties();
+        driver.findElement(By.name("email")).sendKeys(LOGIN);
+        driver.findElement(By.cssSelector("[type='password']")).sendKeys(PASSWORD);
+        driver.findElement(By.xpath("//button/*[contains(text(),'Войти')]"))
                 .click();
     }
 
@@ -128,6 +135,22 @@ public class WebDriverTest {
     }
        private void clicker(By by){
         driver.findElement(by).click();
+    }
+
+    public void readProperties() throws FileNotFoundException {
+        try{
+            fileInputStream = new FileInputStream(PATH_TO_CONFIG_PROPERTIES);
+            prop.load(fileInputStream);
+
+            LOGIN = prop.getProperty("USER_LOGIN");
+            PASSWORD = prop.getProperty("USER_PASS");
+
+        }
+        catch (IOException e) {
+            System.out.println("Ошибка в программе: файл " + PATH_TO_CONFIG_PROPERTIES + " не обнаружен");
+            e.printStackTrace();
+        }
+
     }
 
 }
