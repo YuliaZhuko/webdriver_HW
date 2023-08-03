@@ -14,10 +14,10 @@ import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static org.apache.hc.core5.util.Timeout.ofSeconds;
+
 
 public class WebDriverTest {
-    WebDriver driver;
+    private WebDriver driver;
     private Logger log = (Logger) LogManager.getLogger(WebDriverTest.class);
     private final Properties prop = new Properties();
     private FileInputStream fileInputStream;
@@ -26,7 +26,8 @@ public class WebDriverTest {
     private String LOGIN, PASSWORD;
     @BeforeAll
     public static void webDriverSetup(){
-        WebDriverManager.chromedriver().setup();
+      WebDriverManager.chromedriver().setup();
+       // System.setProperty("webdriver.chrome.driver", "C:\\Users\\yazhuk20\\Desktop\\chromedriver1.exe");
     }
 
 
